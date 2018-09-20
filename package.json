@@ -1,0 +1,26 @@
+{
+ "name": "@madelsberger/pausebuffer",
+ "version": "1.0.0",
+ "description": "manage timing of tmi.js-based bot messages to comply with anti-spam measures",
+ "author": "Mark Adelsberger",
+ "license": "MIT",
+ "homepage": "https://github.com/madelsberger/pausebuffer#readme",
+ "bugs": "https://github.com/madelsberger/pausebuffer/issues",
+ "repository": "github:madelsberger/pausebuffer",
+ "keywords": [
+  "twitch",
+  "twitch.tv",
+  "bot",
+  "robot",
+  "spam",
+  "disconnect",
+  "throttle"
+ ],
+ "main": "./lib/pausebuffer.js",
+ "peerDependencies": {
+  "tmi.js": "^1.2.1"
+ },
+ "devDependencies": {
+  "jasmine": "^3.2.0"
+ }
+}
