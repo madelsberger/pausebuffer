@@ -76,7 +76,7 @@ pausebuffer will make sure that
  
 The following options are available to modify pausebuffer's behavior.
 
-## Traffic Threshold
+### Traffic Threshold
 
 The traffic threshold determines when the bot is considered to be generating a
 high volume of traffic.  A period of high traffic does not neceessarily mean
@@ -85,11 +85,13 @@ low-priority messages) depend on whether the traffic volume is high.
 
     client.setThreshold(1);
 
-The threshold is a value between 0 and 1, representing a ratio of messages sent
-(including both queued messages and messages which have been passed through to
-the client in the past `messageCountDuration + messageCountDurationBuffer`
-seconds) to meessages that can be sent.  (Attempting to set a value below or
-above this range will set the value to 0 or 1, respectively.)
+The threshold is a value between 0 and 1.  (Attempting to set a value below or
+above this range will set the value to 0 or 1, respectively.)  The value
+represents a ratio of messages sent to meessages that can be sent; in this
+context "messages sent" includes both messages which have been passed through
+to the client recently enough to still be counted (i.e. roughly within a number
+of seconds equal to `messageCountDuration + messageCountDurationBuffer`; see
+*Message Limit* below) and messages that are queued to be sent.
 
 The default value of 1 means that volume is considered high only when the
 maximum number of messges have been sent.
@@ -113,8 +115,7 @@ was chosen because it handles many situations more gracefully than if the
 traffic volume were reassessed when the message is taken from the queue to be
 sent.)
 
-
-## Message Priority
+### Message Priority
 
 When sending a message with `say` or `action`, you can specify that the
 message priority is low (0), normal (1) or high (2).
@@ -130,7 +131,7 @@ message priority is low (0), normal (1) or high (2).
     client.action(channel, "performs another action with normal priority");
 
 If a high-priority action is placed in the queue, it will be placed ahead of
-any messages that are no high-priority.
+any messages that are not high-priority.
 
 Low-priority messages will not be sent during times of high traffic.  Also, if
 a low-priority message gets into the queue, any subsequent high- or normal-
@@ -141,7 +142,7 @@ low-priority message would just be dropped in that case; but it is also
 possible for messages to be queued during low traffic volume as a result of
 throttling.)
 
-Additionally, lwo-priority messages can "time out".  That is, if one is
+Additionally, low-priority messages can "time out".  That is, if one is
 placed in the queue, but then gets pre-empted by normal- or high-priority 
 messages, after waiting in the queue for a certain amount of time, the
 low-priority message will be dropped.
@@ -153,18 +154,18 @@ timeout to a positive integer `n`, in which case a low-priority message would
 time out after `n` "ticks" in the queue.  (This is roughly equivalent to `n`
 seconds.)
 
-## Message Limit
+### Message Limit
 
-You can cahnge the rules for how many messages the bot is allowed to send in
+You can change the rules for how many messages the bot is allowed to send in
 a given period of time.
 
-WARNING: The purpose of pausebuffer is to keep your bot compliant with anti-
-spam measures.  At a bare minimum, it tries to avoid disconnects caused by
-sending messages too quickly.  The applicable limit for your bot may be
+***WARNING:** The purpose of pausebuffer is to keep your bot compliant with 
+anti-spam measures.  At a bare minimum, it tries to avoid disconnects caused 
+by sending messages too quickly.  The applicable limit for your bot may be
 higher (e.g. if you run your bot on a mod account), so you have the ability
 to set looser restrictions in pausebuffer.  But if you set pausebuffer's
 limits higher than the limits imposed by tmi, then your bot may experience
-unexpected disconnects.
+unexpected disconnects.*
 
 You can change both the number of messages your bot is allowed to send in a
 given period of time, and the period of time in which your bot is allowed to
@@ -193,7 +194,7 @@ period.
 The minimum buffer time is 1, as this is the bare minimum to account for
 the limited precision with which pausebuffer tracks call timing.
 
-## Throttling Controls
+### Throttling Controls
 
 pausebuffer can "throttle" messages - i.e. limit the rate at which they are
 sent to the server by imposing a delay between messages.  You can specify
