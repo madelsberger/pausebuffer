@@ -19,7 +19,7 @@ describe("pausebuffer", function () {
       this.clientMock[pt] = function () {}
     }
     for( const m of managedFunctions ) {
-      this.clientMock[m] = jasmine.createSpy("m");
+      this.clientMock[m] = jasmine.createSpy(m);
     }
 
     this.pb = pausebuffer.wrap(this.clientMock);
