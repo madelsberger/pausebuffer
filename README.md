@@ -46,7 +46,7 @@ Alternately, you can visit the project's
 First, tell pausebuffer to wrap your tmi.js client.
 
     const tmi = require("tmi.js");
-    const pb = require("pausebuffer");
+    const pb = require("@madelsberger/pausebuffer");
 
     const opts = {
       // ...
