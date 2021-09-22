@@ -26,6 +26,14 @@ strategies this may only require a few lines of code even for an existing bot;
 or, by adding pausebuffer-specific parameters when sending a message, you can
 more precisely control how your bot reacts to periods of high activity.
 
+Basic whisper throttling is also included (since version 1.1.0).  For a number
+of reasons, the whisper rules are much simpler.  (The twitch rate limits for
+whispers are simpler / less variable.  The use cases for bots to whisper are
+less common - and also more limited due to the limit on recipients each day.
+And also, the advanced message/action features have, to the best of my
+knowledge, never been used, so it makes sense to use a more YAGNI approach
+going forward.)
+
 ## Requirements
 
 pausebuffer expects you to provide it with a tmi.js client to wrap.  It is
@@ -68,11 +76,17 @@ pausebuffer will make sure that
    5 seconds allow for possible differences in message timing as seen at the
    server.)
 
-2) No two messages are sent within any 1.5s period.  This is referred to as
-   "throttling".  It may help prevent messages from being dropped for being
+2) No two chat messages are sent within any 1.5s period.  This is referred to
+   as "throttling".  It may help prevent messages from being dropped for being
    sent too rapidly.  It can also "smooth out" the flow of messages that would
    otherwise be sent in 35-second pulses, in the event a large spike of
    traffic is created in a short period of time.
+
+3) No two whispers are sent within any 0.75s period.
+
+4) Whispers will not be sent to more than 40 recipients during the entire
+   session.  (A canWhisperTo(username) function is provided so you can check
+   whether a whisper will be bloked for this reason.)
  
 The following options are available to modify pausebuffer's behavior.
 

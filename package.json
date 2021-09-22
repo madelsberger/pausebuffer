@@ -1,6 +1,6 @@
 {
  "name": "@madelsberger/pausebuffer",
- "version": "1.0.0",
+ "version": "1.1.0",
  "description": "manage timing of tmi.js-based bot messages to comply with anti-spam measures",
  "author": "Mark Adelsberger",
  "license": "MIT",
