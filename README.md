@@ -85,8 +85,11 @@ pausebuffer will make sure that
 3) No two whispers are sent within any 0.75s period.
 
 4) Whispers will not be sent to more than 40 recipients during the entire
-   session.  (A canWhisperTo(username) function is provided so you can check
-   whether a whisper will be bloked for this reason.)
+   session.  (A `canWhisperTo(username, reserve)` function is provided so you
+   can check whether a whisper will be bloked for this reason.  If the
+   `reserve` argument is `true` and the 40 slots aren't already full, one of
+   them will be reserved for the requested sender; otherwise, a later whisper
+   could still be rejected.)
  
 The following options are available to modify pausebuffer's behavior.
 

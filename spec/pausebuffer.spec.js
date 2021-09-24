@@ -517,12 +517,23 @@ describe("pausebuffer", function () {
       expect(this.pb.canWhisperTo('viewer_40')).toEqual(true);
 
       for(let i = 0; i < 40; i++) {
-        this.pb.whisper(`viewer_${i}`, `message ${i}`);
+        // one of the 40 "slots" is taken up by actual whispers, or by
+        // canWhisper calls with reserve=true
+        // Ideally a separate test would address that, but then we'd
+        // have to solve the problem of fully resetting state between
+        // each test without exposing a way to perform a similar reset
+        // in production.
+        if (i % 2) {
+          this.pb.whisper(`viewer_${i}`, `message ${i}`);
+        } else {
+          this.pb.canWhisperTo(`viewer_${i}`, true);
+        }
       }
       jasmine.clock().tick(30000);
       this.clientMock.whisper.calls.reset();
 
       expect(this.pb.canWhisperTo('viewer_0')).toEqual(true);
+      expect(this.pb.canWhisperTo('viewer_39')).toEqual(true);
       expect(this.pb.canWhisperTo('viewer_40')).toEqual(false);
       this.pb.whisper('viewer_40', 'message 40');
       this.pb.whisper('viewer_0', 'message 41');
